@@ -1,18 +1,24 @@
 /*Given an array of integers nums of size n and an integer target, return indices of the two numbers such that they add up to target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 Note: The pair of integers must be in the order of their position in the array i.e., the smaller index first then comes the larger one.*/
+
 #include <bits/stdc++.h>
 using namespace std;
-vector<int> solve(int n, vector<int> arr, int target){
-    for(int i=0;i<n-1;i++){
-        for(int j=i+1;j<n;j++){
-            if(arr[i]+arr[j]==target){
-                return {i,j};
-                break;
-            }    
+
+bool solve(int n,vector<int> arr,int target){
+    sort(arr.begin(),arr.end());
+    int l=0,r=n-1;
+    while(l<r){
+        if(arr[l]+arr[r]==target){
+           cout<<l<<" "<<r;
+           return 1;
         }
+        else if(arr[l]+arr[r]<target){
+            l++;
+        }
+        else r--;
     }
-        return {-1,-1};
+    return 0;
 }
 
 int main(){
@@ -28,10 +34,12 @@ int main(){
     }
     cout<<"Enter the target element: ";
     cin>>target;
-    vector<int>res(2,0);
+    bool res;
     res=solve(n,arr,target);
-    for (int i=0;i<2;i++){
-        cout<<res[i]<<" ";
-    }
+    if(res)
+        cout<<"Pair exists";
+    else
+        cout<<"Pair doesn't exist";
     return 0;
+
 }
